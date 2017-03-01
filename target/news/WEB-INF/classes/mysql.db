@@ -1,0 +1,11 @@
+--创建新闻表
+CREATE TABLE `fd_news`(
+ news_id INT AUTO_INCREMENT COMMENT'新闻id',
+ news_title VARCHAR(100) NOT NULL COMMENT'新闻标题',
+ news_comment INT DEFAULT 0 COMMENT'评论数量',
+ news_image VARCHAR(100) NOT NULL COMMENT'图片',
+ news_browse INT DEFAULT 0 COMMENT'浏览量',
+ news_url VARCHAR(100) NOT NULL COMMENT'新闻链接',
+ PRIMARY KEY(news_id)
+)
+

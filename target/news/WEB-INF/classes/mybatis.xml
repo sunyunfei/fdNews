@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--useGeneratedKeys 要求数据库本身具备主键自动增长的功能
+        useGeneratedKeys 取值范围true|false 默认值是：false。
+        含义：设置是否使用JDBC的getGenereatedKeys方法获取主键并赋值到keyProperty设置的领域模型属性中
+
+        -->
+        <setting name="useGeneratedKeys" value="true"/><!--就是获取数据库总的自增的属性-->
+
+        <!--
+         通常数据库列名命名的时候使用大写和下划线并且Java属性常常依据驼峰命名法。
+        为了保证在他们之间的自动匹配要设置属性 mapUnderscoreToCamelCase 为 true
+        -->
+        <setting name="mapUnderscoreToCamelCase" value="true"></setting>
+    </settings>
+</configuration>
