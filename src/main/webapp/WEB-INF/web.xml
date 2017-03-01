@@ -1,0 +1,49 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <filter>
+    <!--这当然就是指定filter的名字-->
+    <filter-name>CharacterEncoding</filter-name>
+    <!--这是用来定义filter的类的名称-->
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <!--用来指定参数的名称-->
+      <param-name>encoding</param-name>
+      <!--用来设定参数值-->
+      <param-value>UTF-8</param-value>
+    </init-param>
+
+    <!--用来定义参数-->
+    <init-param>
+      <!--用来指定参数的名称-->
+      <param-name>forceEncoding</param-name>
+      <!--用来设定参数值-->
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <!--两个主要子元素filter-name和url-pattern.用来定义Filter所对应的URL-->
+  <filter-mapping>
+    <filter-name>CharacterEncoding</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>fdNews</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:applicationConfig.xml,classpath:spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>fdNews</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+</web-app>

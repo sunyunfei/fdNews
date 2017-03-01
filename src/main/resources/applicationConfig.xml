@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--首先配置数据库所在的properties-->
+    <!--<context:property-placeholder location="jdbc.properties"></context:property-placeholder>-->
+
+    <!--配置数据库设置-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+
+        <property name="url" value="jdbc:mysql://182.92.191.4:3306/yangliwuNew?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="17haidai"></property>
+        <!--其他一系列配置-->
+
+        <!--#连接池的最大数据库连接数。设为0表示无限制-->
+        <property name="maxActive" value="20"></property>
+
+        <!--初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时-->
+        <property name="initialSize" value="1"></property>
+
+        <!--最大建立连接等待时间。如果超过此时间将接到异常。设为-1.表示无限制获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，
+如果需要可以通过配置useUnfairLock属性为true使用非公平锁。-->
+        <property name="maxWait" value="6000"></property>
+    </bean>
+
+    <!--sqlSessionFactory 配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--配置数据源 多数据源时会有多个dataSource，同时也需要配置多个sqlSessionFactory来对应-->
+        <property name="dataSource" ref="dataSource"></property>
+
+        <!--
+           当SqlSessionFactoryBean提供的配置不能满足使用时，你可以使用mybatis-config.xml配置文件配置其他属性，
+           然后通过configLocation属性指定该配置的路径，SqlSessionFactoryBean会使用该配置文件创建Configuration
+        -->
+        <property name="configLocation" value="classpath:mybatis.xml"></property>
+
+        <!--该属性可以给包中的类注册别名，注册后可以直接使用类名，而不用使用全限定的类名（就是不用包含包名）-->
+        <property name="typeAliasesPackage" value="fd.pojo"></property>
+
+        <!--配置该属性后，sqlSessionFactory会自动扫描该路径下的所有文件并解析 该路径支持多个，可以用,;\t\n进行分割-->
+        <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+    </bean>
+
+    <!--配置扫描Dao接口包,动态实现Dao接口,注入spring容器中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+
+        <!--basePackage 属性是让你为映射器接口文件设置基本的包路径-->
+        <property name="basePackage" value="fd.dao"></property>
+
+    </bean>
+
+    <!--扫描service包-->
+    <context:component-scan base-package="fd.service"></context:component-scan>
+
+    <!--配置事物管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--开启事物-->
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+</beans>
