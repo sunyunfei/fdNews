@@ -29,4 +29,14 @@
         WHERE
         news_id=#{newsId}
     </update>
+
+    <!--增加评论数量-->
+    <update id="addCommentForNews">
+        UPDATE
+        `fd_news`
+        SET
+        news_comment=news_comment+1
+        WHERE
+        news_id=#{newsId}
+    </update>
 </mapper>

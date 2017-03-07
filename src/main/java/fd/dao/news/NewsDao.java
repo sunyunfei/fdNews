@@ -17,4 +17,7 @@ public interface NewsDao {
 
     //增加浏览量
     void addRecordForNews(@Param("newsId") Integer newsId);
+
+    //增加评论数量
+    void addCommentForNews(@Param("newsId") Integer newsId);
 }

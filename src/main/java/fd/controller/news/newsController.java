@@ -44,11 +44,24 @@ public class newsController {
         return JSON.toJSONString(map);
     }
 
+    //增加浏览记录
     @ResponseBody
     @RequestMapping(value = "/updateBrowse",produces = "application/json;charset=utf-8")
     public String addBrowse(Integer newsId){
 
         newsService.addRecordForNews(newsId);
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",1);
+        return JSON.toJSONString(map);
+    }
+
+
+    //增加评论数量
+    @ResponseBody
+    @RequestMapping(value = "/updateComment",produces = "application/json;charset=utf-8")
+    public String addComment(Integer newsId){
+
+        newsService.addCommentForNews(newsId);
         Map<String,Object> map = new HashMap<>();
         map.put("code",1);
         return JSON.toJSONString(map);

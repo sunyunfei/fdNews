@@ -67,6 +67,13 @@ public class UserController {
     public String insertUser(String mobile,String pwd){
 
         Map<String,Object> map = new HashMap<>();
+        //判断是否已经有这个用户
+        User user = userService.queryForMobile(mobile);
+        if (user != null){
+            map.put("code",-1);
+            map.put("message","手机号已注册");
+            return JSON.toJSONString(map);
+        }
         //插入数据
         boolean result = userService.insertUser(mobile,pwd);
         if (result){
@@ -74,6 +81,7 @@ public class UserController {
             map.put("code",1);
         }else {
             map.put("code",-1);
+            map.put("message","注册失败请重试");
         }
         return JSON.toJSONString(map);
     }

@@ -57,15 +57,22 @@ public class CollectController {
         }
 
         //开始解析收藏数据
-        List<News> newsList = new ArrayList<>();
+        List newsList = new ArrayList<>();
         for(int i = 0;i <list.size();i ++){
 
             Collect collect = list.get(i);
             //获取对应的新闻
             System.out.print("newId=" + collect.getNewsId());
             News news = newsService.queryOneNews(collect.getNewsId());
-            System.out.print(news);
-            newsList.add(news);
+            if(news != null){
+
+                Map<String,Object> objectMap = new HashMap<>();
+                objectMap.put("collectId",collect.getCollectId());
+                objectMap.put("newsTitle",news.getNewsTitle());
+                objectMap.put("newsImage",news.getNewsImage());
+                objectMap.put("newsUrl",news.getNewsUrl());
+                newsList.add(objectMap);
+            }
         }
 
         //判断新闻list是否有数据

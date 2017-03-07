@@ -34,4 +34,10 @@ public class NewsService {
 
        newsDao.addRecordForNews(newsId);
     }
+
+    //增加评论数量
+   public void addCommentForNews(Integer newsId){
+
+       newsDao.addCommentForNews(newsId);
+   }
 }
