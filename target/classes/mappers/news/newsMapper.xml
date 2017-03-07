@@ -8,5 +8,25 @@
     <select id="queryNews" resultType="news">
         SELECT *
         FROM `fd_news`
+        WHERE
+        news_type=#{newsType}
     </select>
+
+    <!--查询某一条-->
+    <select id="queryOneNews" resultType="news">
+        SELECT *
+        FROM `fd_news`
+        WHERE
+        news_id=#{newsId}
+    </select>
+
+    <!--浏览量增加-->
+    <update id="addRecordForNews">
+        UPDATE
+        `fd_news`
+        SET
+        news_browse=news_browse+1
+        WHERE
+        news_id=#{newsId}
+    </update>
 </mapper>

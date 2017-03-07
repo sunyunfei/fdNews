@@ -26,13 +26,33 @@ public class newsController {
     //查询所有的新闻数据
     @ResponseBody
     @RequestMapping(value = "/querynews",produces = "application/json;charset=utf-8")
-    public String queryNews(){
+    public String queryNews(String type){
 
-        List<News> list = newsService.queryNews();
+        List<News> list = newsService.queryNews(type);
 
         return justRequest(list);
     }
 
+    //查询某一条新闻
+    @ResponseBody
+    @RequestMapping(value = "/queryOnenews",produces = "application/json;charset=utf-8")
+    public String queryOneNews(Integer newsId){
+
+        News news = newsService.queryOneNews(newsId);
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",news);
+        return JSON.toJSONString(map);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/updateBrowse",produces = "application/json;charset=utf-8")
+    public String addBrowse(Integer newsId){
+
+        newsService.addRecordForNews(newsId);
+        Map<String,Object> map = new HashMap<>();
+        map.put("code",1);
+        return JSON.toJSONString(map);
+    }
 
 
     //数据返回
