@@ -33,4 +33,10 @@ public class CollectService {
 
        return collectDao.queryCollect(mobile);
    }
+
+    //查询单个
+   public Collect queryOneCollect(Integer newsId){
+
+       return collectDao.queryOneCollect(newsId);
+   }
 }

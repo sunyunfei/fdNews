@@ -100,4 +100,21 @@ public class CollectController {
         map.put("code",-1);
         return JSON.toJSONString(map);
     }
+
+    //查询单个
+    @ResponseBody
+    @RequestMapping(value = "/queryOneCollect",produces = "application/json;charset=utf-8")
+    public String queryOneCollect(Integer newsId){
+
+        Collect collect = collectService.queryOneCollect(newsId);
+
+        Map<String,Object> map = new HashMap<>();
+        if (collect != null){
+            map.put("code",1);
+            return JSON.toJSONString(map);
+        }
+
+        map.put("code",-1);
+        return JSON.toJSONString(map);
+    }
 }

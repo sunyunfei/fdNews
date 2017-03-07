@@ -37,4 +37,12 @@
         AND
         collect_id=#{collectId}
     </delete>
+
+    <select id="queryOneCollect" resultType="collect">
+        SELECT *
+        FROM
+        `fd_collect`
+        WHERE
+        news_id=#{newsId}
+    </select>
 </mapper>

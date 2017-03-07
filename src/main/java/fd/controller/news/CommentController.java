@@ -2,8 +2,10 @@ package fd.controller.news;
 
 import com.alibaba.fastjson.JSON;
 import fd.pojo.news.Comment;
+import fd.pojo.user.Collect;
 import fd.pojo.user.User;
 import fd.service.news.CommentService;
+import fd.service.news.NewsService;
 import fd.service.uses.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ public class CommentController {
     private CommentService commentService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private NewsService newsService;
 
     //插入
     @ResponseBody
@@ -45,6 +49,8 @@ public class CommentController {
         boolean result = commentService.insertComment(comment);
         Map<String,Object> map = new HashMap<>();
         if (result){
+            //评论数量增加
+            newsService.addCommentForNews(newsId);
             map.put("code",1);
             return JSON.toJSONString(map);
         }
@@ -89,4 +95,5 @@ public class CommentController {
         map.put("data",list1);
         return JSON.toJSONString(map);
     }
+
 }

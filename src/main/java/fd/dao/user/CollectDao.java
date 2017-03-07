@@ -17,4 +17,7 @@ public interface CollectDao {
 
     //查询
     List<Collect> queryCollect(@Param("userMobile") String mobile);
+
+    //查询单个
+    Collect queryOneCollect(@Param("newsId") Integer newsId);
 }
