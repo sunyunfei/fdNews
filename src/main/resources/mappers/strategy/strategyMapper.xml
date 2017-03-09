@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fd.dao.strategy.StrategyDao">
+
+    <!--查询类别-->
+    <select id="queryType" resultType="java.lang.String">
+
+        SELECT
+        classes
+        FROM
+        `fd_strategy`
+        GROUP BY
+        classes
+    </select>
+
+    <!--查询某一条-->
+    <select id="queryOneData" resultType="strategy">
+        SELECT *
+        FROM
+        `fd_strategy`
+        WHERE
+        strategy_id=#{strategyId}
+    </select>
+
+    <!--查询数据-->
+    <select id="queryDataForType" resultType="strategy">
+        SELECT *
+        FROM
+        `fd_strategy`
+        WHERE
+        classes=#{classes}
+    </select>
+
+    <!--增加收藏数-->
+    <update id="addCollectData">
+      UPDATE
+       `fd_strategy`
+       SET
+       collect=collect+1
+       WHERE
+       strategy_id=#{strategyId}
+    </update>
+
+
+    <!--增加浏览量-->
+    <update id="addRecordData">
+        UPDATE
+       `fd_strategy`
+       SET
+       record=record+1
+       WHERE
+       strategy_id=#{strategyId}
+    </update>
+
+</mapper>

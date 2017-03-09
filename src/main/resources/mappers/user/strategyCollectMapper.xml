@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fd.dao.user.StrategyCollectDao">
+
+    <!--插入-->
+    <insert id="insertCollect">
+        INSERT INTO
+        `fd_collect_strategy`
+        (
+        strategy_id,
+        user_mobile
+        )
+        VALUES
+        (
+        #{strategyId},
+        #{userMobile}
+        )
+    </insert>
+
+    <!--查询-->
+    <select id="queryCollect" parameterType="java.lang.String" resultType="strategyCollect">
+        SELECT *
+        FROM
+        `fd_collect_strategy`
+        WHERE
+        user_mobile=#{userMobile}
+    </select>
+
+    <!--删除-->
+    <delete id="deleteCollect">
+        DELETE FROM
+        `fd_collect_strategy`
+        WHERE
+        user_mobile=#{userMobile}
+        AND
+        collect_id=#{collectId}
+    </delete>
+
+
+    <select id="queryOneCollect" resultType="strategyCollect">
+        SELECT *
+        FROM
+        `fd_collect_strategy`
+        WHERE
+        strategy_id=#{strategyId}
+    </select>
+</mapper>

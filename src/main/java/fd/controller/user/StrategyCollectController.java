@@ -1,10 +1,10 @@
 package fd.controller.user;
 
 import com.alibaba.fastjson.JSON;
-import fd.pojo.news.News;
-import fd.pojo.user.Collect;
-import fd.service.news.NewsService;
-import fd.service.uses.CollectService;
+import fd.pojo.strategy.Strategy;
+import fd.pojo.user.StrategyCollect;
+import fd.service.strategy.StrategyService;
+import fd.service.uses.StrategyCollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,23 +16,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by syf on 2017/3/7.
+ * Created by syf on 2017/3/9.
  */
 @Controller
-@RequestMapping("/collect")
-public class CollectController {
+@RequestMapping("/strategyCollect")
+public class StrategyCollectController {
+
 
     @Autowired
-    private CollectService collectService;
+    private StrategyCollectService strategyCollectService;
     @Autowired
-    private NewsService newsService;
-
+    private StrategyService strategyService;
     //插入
     @ResponseBody
     @RequestMapping(value = "/insertData",produces = "application/json;charset=utf-8")
-    public String insertData(String mobile,Integer newsId){
+    public String insertData(String mobile,Integer strategyId){
 
-        Boolean result = collectService.insertCollect(mobile,newsId);
+        Boolean result = strategyCollectService.insertCollect(mobile,strategyId);
         Map<String,Object> map = new HashMap<>();
         if (result){
             map.put("code",1);
@@ -48,7 +48,7 @@ public class CollectController {
     public String queryData(String mobile){
 
         //首先获取到收藏表
-        List<Collect> list = collectService.queryCollect(mobile);
+        List<StrategyCollect> list = strategyCollectService.queryCollect(mobile);
         Map<String,Object> map = new HashMap<>();
         //如果没有收藏数据
         if (list.size() <= 0){
@@ -60,17 +60,17 @@ public class CollectController {
         List newsList = new ArrayList<>();
         for(int i = 0;i <list.size();i ++){
 
-            Collect collect = list.get(i);
+            StrategyCollect collect = list.get(i);
             //获取对应的新闻
-            System.out.print("newId=" + collect.getNewsId());
-            News news = newsService.queryOneNews(collect.getNewsId());
-            if(news != null){
+            System.out.print("newId=" + collect.getStrategyId());
+            Strategy strategy = strategyService.queryOneData(collect.getStrategyId());
+            if(strategy != null){
 
                 Map<String,Object> objectMap = new HashMap<>();
                 objectMap.put("collectId",collect.getCollectId());
-                objectMap.put("newsTitle",news.getNewsTitle());
-                objectMap.put("newsImage",news.getNewsImage());
-                objectMap.put("newsUrl",news.getNewsUrl());
+                objectMap.put("strategyId",strategy.getTitle());
+                objectMap.put("strategyImage",strategy.getImage());
+                objectMap.put("strategyUrl",strategy.getUrl());
                 newsList.add(objectMap);
             }
         }
@@ -91,7 +91,7 @@ public class CollectController {
     @RequestMapping(value = "/deleteData",produces = "application/json;charset=utf-8")
     public String deleteData(String mobile,Integer collectId){
 
-        Boolean result = collectService.deleteCollect(mobile,collectId);
+        Boolean result = strategyCollectService.deleteCollect(mobile,collectId);
         Map<String,Object> map = new HashMap<>();
         if (result){
             map.put("code",1);
@@ -104,9 +104,9 @@ public class CollectController {
     //查询单个
     @ResponseBody
     @RequestMapping(value = "/queryOneCollect",produces = "application/json;charset=utf-8")
-    public String queryOneCollect(Integer newsId){
+    public String queryOneCollect(Integer strategyId){
 
-        Collect collect = collectService.queryOneCollect(newsId);
+        StrategyCollect collect = strategyCollectService.queryOneCollect(strategyId);
 
         Map<String,Object> map = new HashMap<>();
         if (collect != null){

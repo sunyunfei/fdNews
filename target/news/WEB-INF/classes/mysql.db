@@ -39,3 +39,23 @@ CREATE TABLE `fd_comment`(
  user_mobile VARCHAR(30) NOT NULL COMMENT '用户账户',
  PRIMARY KEY(comment_id)
 )
+
+ --攻略
+CREATE TABLE `fd_strategy`(
+ strategy_id INT AUTO_INCREMENT COMMENT 'id',
+ title VARCHAR(50) NOT NULL COMMENT '标题',
+ imgae VARCHAR(100) NOT NULL COMMENT '图片',
+ url VARCHAR(100) NOT NULL COMMENT '链接',
+ classes VARCHAR(30) NOT NULL COMMENT '类别',
+ record INT NOT NULL DEFAULT 0 COMMENT '记录',
+ collect INT NOT NULL DEFAULT 0 COMMENT '收藏',
+ PRIMARY KEY(strategy_id)
+)
+
+ --攻略收藏表
+CREATE TABLE `fd_collect_strategy`(
+ collect_id INT AUTO_INCREMENT COMMENT 'id',
+ strategy_id INT NOT NULL COMMENT '攻略id',
+ user_mobile VARCHAR(20) NOT NULL COMMENT '用户手机号',
+ PRIMARY KEY(collect_id,strategy_id)
+)
